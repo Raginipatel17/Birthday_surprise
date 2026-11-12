@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Happy Birthday!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f3fbf6;
+        --bg2: #fdeee4;
+        --card: #ffffff;
+        --ink: #43395a;
+        --soft: #857b9c;
+        --a: #ffb3a7;
+        --b: #b9a7ff;
+        --c: #a8e6cf;
+        --d: #ffe29a;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #1d2a28;
+          --bg2: #2c2338;
+          --card: #352d44;
+          --ink: #f4ecfa;
+          --soft: #bdb2d0;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #1d2a28;
+        --bg2: #2c2338;
+        --card: #352d44;
+        --ink: #f4ecfa;
+        --soft: #bdb2d0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        background:
+          radial-gradient(circle at 20% 10%, var(--bg2), transparent 55%),
+          linear-gradient(170deg, var(--bg), var(--bg2));
+        color: var(--ink);
+        font-family: "Quicksand", system-ui, sans-serif;
+        overflow-x: hidden;
+      }
+      .hand {
+        font-family: "Caveat", "Segoe Script", cursive;
+        font-weight: 600;
+      }
+      main {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 30px 18px 60px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+      .screen {
+        display: none;
+        animation: in 0.6s ease;
+      }
+      .screen.on {
+        display: block;
+      }
+      @keyframes in {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      h1 {
+        font-size: 3rem;
+        line-height: 1.05;
+        margin: 0.2em 0;
+      }
+      h2 {
+        font-size: 2.1rem;
+        margin: 0.2em 0;
+      }
+      p {
+        line-height: 1.55;
+      }
+      .sub {
+        color: var(--soft);
+      }
+      button {
+        font: inherit;
+        font-weight: 700;
+        border: 0;
+        border-radius: 18px;
+        padding: 13px 28px;
+        background: var(--b);
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+        transition: transform 0.15s;
+      }
+      button:active {
+        transform: translateY(3px);
+      }
+      button:disabled {
+        opacity: 0.35;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: 0 10px 28px rgba(120, 100, 160, 0.16);
+      }
+      .blob {
+        font-size: 5rem;
+        animation: bob 3s ease-in-out infinite;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-10px) rotate(4deg);
+        }
+      }
+      .gifts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 18px 0;
+      }
+      .gift {
+        background: var(--card);
+        border-radius: 22px;
+        min-height: 130px;
+        padding: 12px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        box-shadow: 0 8px 22px rgba(120, 100, 160, 0.16);
+        transition: transform 0.3s;
+      }
+      .gift:hover {
+        transform: rotate(-2deg) scale(1.03);
+      }
+      .gift .big {
+        font-size: 3rem;
+      }
+      .gift.open {
+        background: var(--d);
+        color: #4d3c14;
+        cursor: default;
+        transform: none;
+      }
+      .collage {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 95px;
+        gap: 12px;
+        margin: 18px 0;
+      }
+      .collage .c {
+        padding: 6px;
+        border-radius: 8px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        transform: rotate(var(--r));
+        overflow: hidden;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        font-size: 3rem;
+        background: linear-gradient(135deg, var(--c), var(--b));
+      }
+      .collage .c:nth-child(n + 1) {
+        grid-row: span 2;
+       
+      }
+      .collage img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .lb {
+        position: fixed;
+        inset: 0;
+        background: rgba(40, 30, 60, 0.88);
+        z-index: 80;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: #fff;
+      }
+      .lb img {
+        max-width: 100%;
+        max-height: 70vh;
+        border-radius: 10px;
+      }
+      .gift.sel {
+        background: var(--d);
+        color: #4d3c14;
+        box-shadow: 0 0 0 4px var(--a);
+      }
+      .sky {
+        position: relative;
+        height: 320px;
+        border-radius: 28px;
+        background: linear-gradient(var(--card), transparent);
+        overflow: hidden;
+        margin: 12px 0;
+        touch-action: manipulation;
+      }
+      .star {
+        position: absolute;
+        top: -40px;
+        font-size: 30px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .jar {
+        font-size: 2.6rem;
+      }
+      .bar {
+        height: 12px;
+        border-radius: 99px;
+        background: var(--card);
+        overflow: hidden;
+        margin: 8px auto;
+        max-width: 260px;
+      }
+      .bar > i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--a);
+        transition: width 0.3s;
+      }
+      .polas {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 18px 0;
+      }
+      .pola {
+        background: #fff;
+        color: #43395a;
+        padding: 8px 8px 12px;
+        border-radius: 6px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        transform: rotate(-3deg);
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .pola:nth-child(even) {
+        transform: rotate(3deg);
+      }
+      .pola.o {
+        transform: rotate(0) scale(1.05);
+        z-index: 2;
+      }
+      .pola .ph {
+        height: 110px;
+        border-radius: 4px;
+        background: linear-gradient(135deg, var(--c), var(--b));
+        display: grid;
+        place-items: center;
+        font-size: 44px;
+        overflow: hidden;
+      }
+      .pola img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .pola .t {
+        font-size: 1.2rem;
+        margin-top: 4px;
+      }
+      .pola .long {
+        display: none;
+        font-size: 0.8rem;
+        margin-top: 4px;
+      }
+      .pola.o .long {
+        display: block;
+      }
+      .cake {
+        font-size: 6rem;
+        position: relative;
+        margin: 10px 0;
+      }
+      .flame {
+        position: absolute;
+        left: 50%;
+        top: -4px;
+        transform: translateX(-50%);
+        font-size: 2.2rem;
+        transition: opacity 0.4s;
+      }
+      .letter {
+        text-align: left;
+        padding: 24px;
+      }
+      .letter p {
+        margin: 0.6em 0;
+      }
+      .sig {
+        font-size: 2.2rem;
+        text-align: right;
+        color: var(--a);
+      }
+      .fx {
+        position: fixed;
+        pointer-events: none;
+        z-index: 50;
+      }
+      .toggle {
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + 10px);
+        right: 12px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        background: var(--card);
+        color: var(--ink);
+        z-index: 60;
+        border-radius: 99px;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="toggle" id="theme" aria-label="Toggle light or dark">
+      🌙
+    </button>
+    <main>
+      <section class="screen on" id="s0">
+        <div class="blob">🎁</div>
+        <p class="sub">Baar Baar Din ye aaye... Baar Baar Dil ye gaye... tum Jio Hazaro saal ye mere hai aarzo...<br> HAPPY BIRTHDAY TO YOU <br> HAPPY BIRTHDAY TO YOU</p>
+        <h1 class="hand" id="title"></h1>
+        <p>HAPPY BIRTHDAY TO YOU</p>
+        <button id="b0">🚚 Chaliye Shuru Karte hai</button>
+      </section>
+
+      <section class="screen" id="s1">
+        <h2 class="hand">Photo not Found 404 in Gallery 🔃</h2>
+        <h3 class="hand">Mere pass ek bhi photos nahi hai apan sab ki... Soory🥲</h3>
+        <p class="sub">Tap on the photos to view the full images and get full gyan🧠</p>
+        <div class="collage" id="collage"></div>
+        <button id="b1">Salu.. halu.. halu..🫦</button>
+      </section>
+
+      <section class="screen" id="s2">
+        <h2 class="hand">Slap the cake🤚</h2>
+        <p class="sub">Tap them before they fall into the grass.</p>
+        <div class="sky" id="sky"></div>
+        <div class="bar"><i id="fill"></i></div>
+        <p class="sub" id="cnt">0 / 5</p>
+        <button id="b2" disabled>Abbi Mazza ayega na bidu...💃</button>
+      </section>
+
+      <section class="screen" id="s3">
+        <h2 class="hand">Apna Dahej Choose karo 🎁</h2>
+        <p class="sub">Choose the one you want. </p>
+        <div class="gifts" id="gifts"></div>
+        <div id="sendbox" style="display: none">
+          <p class="hand" id="chosen" style="font-size: 1.6rem"></p>
+          <button id="wa">Send Dahej Choice to frand💅</button>
+          <button id="copy" style="background: var(--c); color: #2b4a3c">
+            Copy message
+          </button>
+          <p class="sub" id="copied">&nbsp;</p>
+        </div>
+        <button id="b3" disabled>Kadam Kadam Badhate chalo 🦵</button>
+      </section>
+
+      <section class="screen" id="s4">
+        <h2 class="hand">Make a wish 🎂</h2>
+        <h2 class="hand">May God fulfill all your dreams and wishes before budhapaa 👵</h2>
+        <p class="sub" id="cakehint">Tap the candle to light it.</p>
+        <div class="cake">
+          🎂<span class="flame" id="flame" style="opacity: 0">🔥</span>
+        </div>
+        <button id="b4">Light the candle</button>
+      </section>
+
+      <section class="screen" id="s5">
+        <h2 class="hand">One more thing 💌</h2>
+        <div class="card letter" id="letter"></div>
+      </section>
+    </main>
+    <script>
+      // ===== EDIT THIS PART =====
+      const CONFIG = {
+        friend: "Nehahahaaaa",
+        me: "Ragini Kumari, 11th H, Stream: PCM",
+        gifts: [
+          { emoji: "💐", src:"images/gifts/gift1.jpg", text: "A Handsome Hulk.." },
+          { emoji: "🍰",src:"images/gifts/gift2.jpg", text: "Kahi Ghumne Chale bas 7 bje tak.." },
+          { emoji: "🎬",src:"images/gifts/gift4.jpg", text: "Chocolates with flowers.." },
+          { emoji: "🛍️",src:"images/gifts/gift3.jpg", text: "Jewellery.." },
+          { emoji: "📚",src:"images/gifts/gift5.jpg", text: "Books with this genre" },
+          { emoji: "☕",src:"images/gifts/gift6.jpg", text: "Khud Soch lo, Buddu..." },
+        ],
+        wish: "May this year bring you everything you’ve been quietly hoping for.",
+        photos: [
+          // src = your photo (I embed it for you), emoji shows until then
+          { src: "images/profilepic/groupphoto2.jpg", emoji: "🍜", caption: "let's buy our hair color together, though I might get bald soon...😂" },
+          { src: "images/profilepic/groupphoto3.jpg", emoji: "🎶", caption: "let's celebrate your wonderful day every year🧓... jab tak tu khud hame aane se mana kar de but... Excuse me Miss, Hum Dheeth hai😜" },
+          { src: "images/profilepic/groupphoto1.jpg", emoji: "🌅", caption: "Apan log in Animalverse😼" },
+          { src: "images/profilepic/groupphoto4.png", emoji: "😒", caption: "Video calls kya karenge😒... Voice calls toh uthate nahi hai. BC 🤡" },
+          { src: "images/profilepic/groupphoto5.jpg", emoji: "🥳", caption: "Ahem...🫡 Seriously Ab tu hi Fan meetup karwa sakti hai of everyone" },
+          { src: "images/profilepic/groupphoto6.jpg", emoji: "💖", caption: "May Bhagwan Jii 🙏 Bless You with a Handfull and Dashking Munda with money💸 and humor ofc..." },
+        ],
+        letter: [
+          "Happy birthday Yaar! Thoda Zada ho gya😅... But Once again, Bhagwaan apki sabhi इच्छा and कामना puri karen. I hope tujhe acha laga yhe...\n Aur Gift Kya Choose kiya Wo jarur Bejio. Once Again, Janam Din Ki Hardik Pandayaye 🤡",
+        ],
+      };
+      // ==========================
+
+      const $ = (id) => document.getElementById(id);
+      const go = (n) => {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("on"));
+        $("s" + n).classList.add("on");
+        scrollTo(0, 0);
+      };
+      $("title").innerHTML = "Happy Birthday,<br>" + CONFIG.friend + "!";
+      $("theme").onclick = () => {
+        const r = document.documentElement;
+        const dark =
+          getComputedStyle(r).getPropertyValue("--bg").trim() === "#1d2a28";
+        r.dataset.theme = dark ? "light" : "dark";
+        $("theme").textContent = dark ? "🌙" : "☀️";
+      };
+      $("b0").onclick = () => {
+        burst(20, ["🎈", "✨", "💖"]);
+        go(1);
+      };
+
+      // collage
+      CONFIG.photos.forEach((p, i) => {
+        const d = document.createElement("div");
+        d.className = "c";
+        d.style.setProperty("--r", (i % 2 ? 2.5 : -2.5) + "deg");
+        d.innerHTML = p.src
+          ? `<img src="${p.src}" alt="" style="object-fit:contain;">`
+          : `<span>${p.emoji}</span>`;
+        d.onclick = () => {
+          const o = document.createElement("div");
+          o.className = "lb";
+          o.innerHTML =
+            (p.src
+              ? `<img src="${p.src}" alt="">`
+              : `<span style="font-size:6rem">${p.emoji}</span>`) +
+            `<div class="hand" style="font-size:1.6rem;margin-top:10px; text-align:center">${p.caption}</div>`;
+          o.onclick = () => o.remove();
+          document.body.appendChild(o);
+        };
+        $("collage").appendChild(d);
+      });
+      $("b1").onclick = () => {
+        go(2);
+        startStars();
+      };
+
+      // star game
+      let caught = 0,
+        timer = null;
+      function startStars() {
+        if (timer) return;
+        timer = setInterval(() => {
+          if (caught >= 10) return;
+          const s = document.createElement("div");
+          s.className = "star";
+          s.textContent = ["👯", "🫦", "💩","🎂"][Math.floor(Math.random() * 4)];
+          s.style.left = 5 + Math.random() * 85 + "%";
+          $("sky").appendChild(s);
+          const a = s.animate(
+            [
+              { transform: "translateY(0)" },
+              { transform: "translateY(370px)" },
+            ],
+            { duration: 2600 + Math.random() * 1200, easing: "linear" },
+          );
+          a.onfinish = () => s.remove();
+          s.onpointerdown = () => {
+            if (!s.isConnected) return;
+            s.remove();
+            if(s.textContent=="🎂"){
+                caught++;
+
+            }
+            $("fill").style.width = Math.min(caught, 10) * 20 + "%";
+            $("cnt").textContent = Math.min(caught, 5) + " / 5";
+            if (caught === 1) {
+              clearInterval(timer);
+              $("cnt").innerHTML =
+                "<span class='hand' style='font-size:1.4rem'>" +
+                CONFIG.wish +
+                "</span>";
+              $("b2").disabled = false;
+              burst(30, ["🌟"]);
+            }
+          };
+        }, 650);
+      }
+      $("b2").onclick = () => go(3);
+
+      // gift picker
+      let pick = null;
+      CONFIG.gifts.forEach((g) => {
+        const d = document.createElement("div");
+        d.className = "gift";
+        d.innerHTML = `<div><img src=${g.src} style="object-fit:contain;border-radius:5%" width="100%"><div class="hand" style="font-size:1.2rem">${g.text}</div></div>`;
+        d.onclick = () => {
+          document
+            .querySelectorAll(".gift")
+            .forEach((x) => x.classList.remove("sel"));
+          d.classList.add("sel");
+          pick = g;
+          burst(10, ["💖", "✨"]);
+          $("chosen").textContent = "You picked: " + g.emoji + " " + g.text;
+          $("sendbox").style.display = "block";
+          $("b3").disabled = false;
+        };
+        $("gifts").appendChild(d);
+      });
+      const msg = () =>
+      
+        "Happy birthday to me!  Mujhe chahiye : " +  pick.text ;
+      $("wa").onclick = () => {
+        window.open(
+          "https://wa.me/919315516129/" +
+            "?text=" +
+            encodeURIComponent(msg()),
+          "_blank",
+        );
+      };
+      $("copy").onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(msg());
+          $("copied").textContent = "Copied! Paste it in your chat 💌";
+        } catch (e) {
+          $("copied").textContent = msg();
+        }
+      };
+      $("b3").onclick = () => go(4);
+
+      // cake
+      let stage = 0;
+      $("b4").onclick = () => {
+        if (stage === 0) {
+          $("flame").style.opacity = 1;
+          $("cakehint").textContent =
+            "Close your eyes, make a wish, then blow.";
+          $("b4").textContent = "Blow 💨";
+          stage = 1;
+        } else if (stage === 1) {
+          $("flame").style.opacity = 0;
+          stage = 2;
+          burst(60, ["🎉", "🎊", "💖", "🌸", "✨", "🎂"]);
+          $("cakehint").textContent = "Wish made. 🤫";
+          $("b4").textContent = "Open the letter 💌";
+        } else {
+          $("letter").innerHTML =
+            CONFIG.letter.map((t) => `<p>${t}</p>`).join("") +
+            `<div class="sig hand">with love, ${CONFIG.me} 💕</div>`;
+          go(5);
+          burst(30, ["💖", "✨"]);
+        }
+      };
+
+      function burst(n, set) {
+        for (let i = 0; i < n; i++) {
+          const e = document.createElement("div");
+          e.className = "fx";
+          e.textContent = set[i % set.length];
+          e.style.left = Math.random() * 100 + "vw";
+          e.style.top = "-30px";
+          e.style.fontSize = 16 + Math.random() * 18 + "px";
+          document.body.appendChild(e);
+          e.animate(
+            [
+              { transform: "translateY(0) rotate(0)", opacity: 1 },
+              {
+                transform: `translateY(${innerHeight + 60}px) rotate(${Math.random() * 540}deg)`,
+                opacity: 0.8,
+              },
+            ],
+            { duration: 2200 + Math.random() * 1800, easing: "ease-in" },
+          ).onfinish = () => e.remove();
+        }
+      }
+    </script>
+  </body>
+</html>
